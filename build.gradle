@@ -1,0 +1,43 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+group = 'net.nlacombe'
+version = '0.1.0'
+
+sourceCompatibility = JavaVersion.VERSION_15
+targetCompatibility = JavaVersion.VERSION_15
+
+dependencies {
+    api 'javax.json:javax.json-api:1.1.4'
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
+
+task javadocJar(type: Javadoc) {
+    source = sourceSets.main.allJava
+    options.quiet()
+}
+
+java {
+    modularity.inferModulePath = true
+
+	withJavadocJar()
+	withSourcesJar()
+}
+
+publishing {
+	publications {
+		jsonFeedLib(MavenPublication) {
+			from components.java
+		}
+	}
+}
+
+wrapper {
+	gradleVersion = '6.7'
+}
