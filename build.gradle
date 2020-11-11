@@ -9,13 +9,24 @@ version = '0.1.0'
 sourceCompatibility = JavaVersion.VERSION_15
 targetCompatibility = JavaVersion.VERSION_15
 
+def junitVersion = '5.7.0'
+
 dependencies {
-    api 'javax.json:javax.json-api:1.1.4'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation 'org.assertj:assertj-core:3.16.1'
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 repositories {
 	mavenCentral()
 	mavenLocal()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 task javadocJar(type: Javadoc) {

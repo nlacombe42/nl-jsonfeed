@@ -1,13 +1,21 @@
 package net.nlacombe.jsonfeedlib.api;
 
+import java.io.OutputStream;
+import java.io.Writer;
 import java.net.URL;
 import java.util.List;
 
 public interface JsonFeed {
 
-    static JsonFeedBuilder builder(String version, String title) {
+    static JsonFeedBuilder builder(JsonFeedVersion version, String title) {
         return new JsonFeedBuilder(version, title);
     }
+
+    void writeAsUtf8Json(OutputStream outputStream, JsonFeedJsonConverter jsonFeedJsonConverter);
+
+    void writeAsJson(Writer writer, JsonFeedJsonConverter jsonFeedJsonConverter);
+
+    String toJson(JsonFeedJsonConverter jsonFeedJsonConverter);
 
     JsonFeedVersion getVersion();
 
@@ -29,7 +37,7 @@ public interface JsonFeed {
 
     String getLanguage();
 
-    boolean isExpired();
+    Boolean isExpired();
 
     List<JsonFeedHub> getHubs();
 
