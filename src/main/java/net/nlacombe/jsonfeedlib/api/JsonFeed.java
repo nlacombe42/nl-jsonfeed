@@ -1,8 +1,17 @@
 package net.nlacombe.jsonfeedlib.api;
 
+import net.nlacombe.jsonfeedlib.api.exception.JsonFeedException;
+import net.nlacombe.jsonfeedlib.impl.JsonFeedConverter;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.List;
 
 public interface JsonFeed {
@@ -11,11 +20,29 @@ public interface JsonFeed {
         return new JsonFeedBuilder(version, title);
     }
 
-    void writeAsUtf8Json(OutputStream outputStream, JsonFeedJsonConverter jsonFeedJsonConverter);
+    static JsonFeed read(InputStream inputStream, Charset charset) {
+        try (var reader = new InputStreamReader(inputStream, charset)) {
+            return JsonFeed.read(reader);
+        } catch (IOException exception) {
+            throw new JsonFeedException("Error reading json feed from input stream: " + exception.getMessage(), exception);
+        }
+    }
 
-    void writeAsJson(Writer writer, JsonFeedJsonConverter jsonFeedJsonConverter);
+    static JsonFeed read(Reader reader)  {
+        return JsonFeedConverter.getInstance().readJsonFeed(reader);
+    }
 
-    String toJson(JsonFeedJsonConverter jsonFeedJsonConverter);
+    static JsonFeed from(String json)  {
+        try (var reader = new StringReader(json)) {
+            return JsonFeed.read(reader);
+        }
+    }
+
+    void writeAsUtf8Json(OutputStream outputStream);
+
+    void writeAsJson(Writer writer);
+
+    String toJson();
 
     JsonFeedVersion getVersion();
 

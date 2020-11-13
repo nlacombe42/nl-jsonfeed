@@ -45,24 +45,24 @@ public class DefaultJsonFeed implements JsonFeed {
     }
 
     @Override
-    public void writeAsUtf8Json(OutputStream outputStream, JsonFeedJsonConverter jsonFeedJsonConverter) {
+    public void writeAsUtf8Json(OutputStream outputStream) {
         try (var writer = new OutputStreamWriter(outputStream, DEFAULT_SERIALIZATION_CHARSET)) {
-            writeAsJson(writer, jsonFeedJsonConverter);
+            writeAsJson(writer);
         } catch (IOException exception) {
             throw new JsonFeedException("Error serializing/writing json feed to json: " + exception.getMessage(), exception);
         }
     }
 
     @Override
-    public void writeAsJson(Writer writer, JsonFeedJsonConverter jsonFeedJsonConverter) {
-        new JsonFeedConverter().writeJsonFeed(this, writer, jsonFeedJsonConverter);
+    public void writeAsJson(Writer writer) {
+        JsonFeedConverter.getInstance().writeJsonFeed(this, writer);
     }
 
     @Override
-    public String toJson(JsonFeedJsonConverter jsonFeedJsonConverter) {
+    public String toJson() {
         var writer = new StringWriter();
 
-        writeAsJson(writer, jsonFeedJsonConverter);
+        writeAsJson(writer);
 
         return writer.toString();
     }

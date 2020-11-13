@@ -6,6 +6,7 @@ import net.nlacombe.jsonfeedlib.api.JsonFeedJsonConverter;
 import net.nlacombe.jsonfeedlib.api.exception.JsonFeedException;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 
 public class JacksonJsonFeedJsonConverter implements JsonFeedJsonConverter {
@@ -18,7 +19,16 @@ public class JacksonJsonFeedJsonConverter implements JsonFeedJsonConverter {
     }
 
     @Override
-    public <BeanType> void writeBeanToJson(BeanType bean, Class<BeanType> beanClass, Writer writer) {
+    public <BeanType> BeanType readBeanFromJson(Reader reader, Class<BeanType> beanClass) {
+        try {
+            return objectMapper.readValue(reader, beanClass);
+        } catch (IOException exception) {
+            throw new JsonFeedException("Error reading/deserializing json feed value: " + exception.getMessage(), exception);
+        }
+    }
+
+    @Override
+    public <BeanType> void writeBeanToJson(Writer writer, BeanType bean) {
         try {
             objectMapper.writeValue(writer, bean);
         } catch (IOException exception) {

@@ -1,6 +1,8 @@
 package net.nlacombe.jsonfeedlib.impl.mapper;
 
 import net.nlacombe.jsonfeedlib.api.JsonFeed;
+import net.nlacombe.jsonfeedlib.api.JsonFeedVersion;
+import net.nlacombe.jsonfeedlib.impl.DefaultJsonFeed;
 import net.nlacombe.jsonfeedlib.impl.dto.JsonFeedDto;
 
 public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
@@ -23,6 +25,11 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
 
     @Override
     public JsonFeed mapToDomainObject(JsonFeedDto jsonFeedDto) {
-        return null; //TODO
+        var jsonFeed = DefaultJsonFeed.newEmpty();
+        jsonFeed.setVersion(JsonFeedVersion.parse(jsonFeedDto.getVersion()));
+        jsonFeed.setTitle(jsonFeedDto.getTitle());
+        jsonFeed.setItems(jsonFeedItemMapper.mapToDomainObjects(jsonFeedDto.getItems()));
+
+        return jsonFeed;
     }
 }
