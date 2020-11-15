@@ -6,7 +6,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="net.nlacombe.jsonfeedlib">
+	<logger name="net.nlacombe.jsonfeed">
 		<level value="debug"/>
 	</logger>
 

@@ -1,9 +1,9 @@
 
-module net.nlacombe.jsonfeedlib {
-    uses net.nlacombe.jsonfeedlib.api.JsonFeedJsonConverter;
+module net.nlacombe.jsonfeed {
+    uses net.nlacombe.jsonfeed.api.JsonFeedJsonConverter;
 
     requires org.slf4j;
 
-    exports net.nlacombe.jsonfeedlib.api;
-    exports net.nlacombe.jsonfeedlib.api.exception;
+    exports net.nlacombe.jsonfeed.api;
+    exports net.nlacombe.jsonfeed.api.exception;
 }
