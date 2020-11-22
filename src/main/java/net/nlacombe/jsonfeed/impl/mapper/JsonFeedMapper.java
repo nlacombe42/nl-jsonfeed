@@ -24,6 +24,14 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
         jsonFeedDto.setTitle(jsonFeed.getTitle());
         jsonFeedDto.setItems(jsonFeedItemMapper.mapToDtos(jsonFeed.getItems()));
         jsonFeedDto.setHome_page_url(jsonFeed.getHomePageUrl() == null ? null : jsonFeed.getHomePageUrl().toString());
+        jsonFeedDto.setFeed_url(jsonFeed.getFeedUrl() == null ? null : jsonFeed.getFeedUrl().toString());
+        jsonFeedDto.setDescription(jsonFeed.getDescription());
+        jsonFeedDto.setUser_comment(jsonFeed.getUserComment());
+        jsonFeedDto.setNext_url(jsonFeed.getNextUrl() == null ? null : jsonFeed.getNextUrl().toString());
+        jsonFeedDto.setIcon(jsonFeed.getIcon() == null ? null : jsonFeed.getIcon().toString());
+        jsonFeedDto.setFavicon(jsonFeed.getFavicon() == null ? null : jsonFeed.getFavicon().toString());
+        jsonFeedDto.setLanguage(jsonFeed.getLanguage());
+        jsonFeedDto.setExpired(jsonFeed.isExpired());
 
         return jsonFeedDto;
     }
@@ -36,6 +44,14 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
             jsonFeed.setTitle(jsonFeedDto.getTitle());
             jsonFeed.setItems(jsonFeedItemMapper.mapToDomainObjects(jsonFeedDto.getItems()));
             jsonFeed.setHomePageUrl(jsonFeedDto.getHome_page_url() == null ? null : URI.create(jsonFeedDto.getHome_page_url()).toURL());
+            jsonFeed.setFeedUrl(jsonFeedDto.getFeed_url() == null ? null : URI.create(jsonFeedDto.getFeed_url()).toURL());
+            jsonFeed.setDescription(jsonFeedDto.getDescription());
+            jsonFeed.setUserComment(jsonFeedDto.getUser_comment());
+            jsonFeed.setNextUrl(jsonFeedDto.getNext_url() == null ? null : URI.create(jsonFeedDto.getNext_url()).toURL());
+            jsonFeed.setIcon(jsonFeedDto.getIcon() == null ? null : URI.create(jsonFeedDto.getIcon()).toURL());
+            jsonFeed.setFavicon(jsonFeedDto.getFavicon() == null ? null : URI.create(jsonFeedDto.getFavicon()).toURL());
+            jsonFeed.setLanguage(jsonFeedDto.getLanguage());
+            jsonFeed.setExpired(jsonFeedDto.getExpired());
 
             return jsonFeed;
         } catch (MalformedURLException e) {

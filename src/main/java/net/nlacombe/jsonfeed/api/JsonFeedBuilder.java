@@ -23,6 +23,54 @@ public class JsonFeedBuilder {
         return this;
     }
 
+    public JsonFeedBuilder feedUrl(URL feedUrl) {
+        jsonFeed.setFeedUrl(feedUrl);
+
+        return this;
+    }
+
+    public JsonFeedBuilder description(String description) {
+        jsonFeed.setDescription(description);
+
+        return this;
+    }
+
+    public JsonFeedBuilder userComment(String userComment) {
+        jsonFeed.setUserComment(userComment);
+
+        return this;
+    }
+
+    public JsonFeedBuilder nextUrl(URL nextUrl) {
+        jsonFeed.setNextUrl(nextUrl);
+
+        return this;
+    }
+
+    public JsonFeedBuilder icon(URL icon) {
+        jsonFeed.setIcon(icon);
+
+        return this;
+    }
+
+    public JsonFeedBuilder favicon(URL favicon) {
+        jsonFeed.setFavicon(favicon);
+
+        return this;
+    }
+
+    public JsonFeedBuilder language(String language) {
+        jsonFeed.setLanguage(language);
+
+        return this;
+    }
+
+    public JsonFeedBuilder expired(Boolean expired) {
+        jsonFeed.setExpired(expired);
+
+        return this;
+    }
+
     public JsonFeed build() {
         return jsonFeed;
     }
