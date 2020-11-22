@@ -7,6 +7,9 @@ public abstract class AbstractBeanMapper<DtoType, DomainType> implements BeanMap
 
     @Override
     public List<DtoType> mapToDtos(List<DomainType> domainObjects) {
+        if (domainObjects == null)
+            return null;
+
         return domainObjects.stream()
             .map(this::mapToDto)
             .collect(Collectors.toList());
@@ -14,6 +17,9 @@ public abstract class AbstractBeanMapper<DtoType, DomainType> implements BeanMap
 
     @Override
     public List<DomainType> mapToDomainObjects(List<DtoType> dtos) {
+        if (dtos == null)
+            return null;
+
         return dtos.stream()
             .map(this::mapToDomainObject)
             .collect(Collectors.toList());

@@ -17,6 +17,7 @@ public class JsonFeedDto {
     private Boolean expired;
     private List<JsonFeedHubDto> hubs;
     private List<JsonFeedAuthorDto> authors;
+    private JsonFeedAuthorDto author;
     private List<JsonFeedItemDto> items;
 
     public String getVersion() {
@@ -129,5 +130,13 @@ public class JsonFeedDto {
 
     public void setItems(List<JsonFeedItemDto> items) {
         this.items = items;
+    }
+
+    public JsonFeedAuthorDto getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(JsonFeedAuthorDto author) {
+        this.author = author;
     }
 }

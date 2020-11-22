@@ -1,6 +1,7 @@
 package net.nlacombe.jsonfeed.test;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.nlacombe.jsonfeed.api.JsonFeedJsonConverter;
 import net.nlacombe.jsonfeed.api.exception.JsonFeedException;
@@ -16,6 +17,7 @@ public class JacksonJsonFeedJsonConverter implements JsonFeedJsonConverter {
     public JacksonJsonFeedJsonConverter() {
         objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @Override

@@ -8,13 +8,18 @@ import net.nlacombe.jsonfeed.impl.dto.JsonFeedDto;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.List;
 
 public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
 
     private final JsonFeedItemMapper jsonFeedItemMapper;
+    private final JsonFeedHubMapper jsonFeedHubMapper;
+    private final JsonFeedAuthorMapper jsonFeedAuthorMapper;
 
     public JsonFeedMapper() {
         this.jsonFeedItemMapper = new JsonFeedItemMapper();
+        this.jsonFeedHubMapper = new JsonFeedHubMapper();
+        this.jsonFeedAuthorMapper = new JsonFeedAuthorMapper();
     }
 
     @Override
@@ -32,6 +37,8 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
         jsonFeedDto.setFavicon(jsonFeed.getFavicon() == null ? null : jsonFeed.getFavicon().toString());
         jsonFeedDto.setLanguage(jsonFeed.getLanguage());
         jsonFeedDto.setExpired(jsonFeed.isExpired());
+        jsonFeedDto.setHubs(jsonFeedHubMapper.mapToDtos(jsonFeed.getHubs()));
+        jsonFeedDto.setAuthors(jsonFeedAuthorMapper.mapToDtos(jsonFeed.getAuthors()));
 
         return jsonFeedDto;
     }
@@ -52,6 +59,13 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
             jsonFeed.setFavicon(jsonFeedDto.getFavicon() == null ? null : URI.create(jsonFeedDto.getFavicon()).toURL());
             jsonFeed.setLanguage(jsonFeedDto.getLanguage());
             jsonFeed.setExpired(jsonFeedDto.getExpired());
+            jsonFeed.setHubs(jsonFeedHubMapper.mapToDomainObjects(jsonFeedDto.getHubs()));
+            jsonFeed.setAuthors(jsonFeedAuthorMapper.mapToDomainObjects(jsonFeedDto.getAuthors()));
+
+            if ((jsonFeed.getAuthors() == null || jsonFeed.getAuthors().isEmpty()) && jsonFeedDto.getAuthor() != null) {
+                var jsonFeedAuthor = jsonFeedAuthorMapper.mapToDomainObject(jsonFeedDto.getAuthor());
+                jsonFeed.setAuthors(List.of(jsonFeedAuthor));
+            }
 
             return jsonFeed;
         } catch (MalformedURLException e) {

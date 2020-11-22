@@ -4,6 +4,7 @@ import net.nlacombe.jsonfeed.impl.DefaultJsonFeed;
 
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class JsonFeedBuilder {
@@ -67,6 +68,42 @@ public class JsonFeedBuilder {
 
     public JsonFeedBuilder expired(Boolean expired) {
         jsonFeed.setExpired(expired);
+
+        return this;
+    }
+
+    public JsonFeedBuilder hubs(List<JsonFeedHub> hubs) {
+        if (hubs == null || hubs.isEmpty())
+            return this;
+
+        jsonFeed.setHubs(hubs);
+
+        return this;
+    }
+
+    public JsonFeedBuilder hubs(JsonFeedHub... hubs) {
+        if (hubs == null || hubs.length == 0)
+            return this;
+
+        jsonFeed.setHubs(List.of(hubs));
+
+        return this;
+    }
+
+    public JsonFeedBuilder authors(List<JsonFeedAuthor> authors) {
+        if (authors == null || authors.isEmpty())
+            return this;
+
+        jsonFeed.setAuthors(authors);
+
+        return this;
+    }
+
+    public JsonFeedBuilder authors(JsonFeedAuthor... authors) {
+        if (authors == null || authors.length == 0)
+            return this;
+
+        jsonFeed.setAuthors(List.of(authors));
 
         return this;
     }
