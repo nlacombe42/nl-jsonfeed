@@ -23,6 +23,10 @@ public class JsonFeedItemBuilder {
         return new JsonFeedItemBuilder(id, null, contentHtml);
     }
 
+    public static JsonFeedItemBuilder builderFromTextAndHtmlContent(String id, String contentText, String contentHtml) {
+        return new JsonFeedItemBuilder(id, contentText, contentHtml);
+    }
+
     public JsonFeedItemBuilder url(URL url) {
         defaultJsonFeedItem.setUrl(url);
 

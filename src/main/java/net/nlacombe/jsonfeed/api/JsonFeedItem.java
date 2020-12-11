@@ -15,6 +15,10 @@ public interface JsonFeedItem {
         return JsonFeedItemBuilder.fromHtmlContent(id, contentHtml);
     }
 
+    static JsonFeedItemBuilder builderFromTextAndHtmlContent(String id, String contentText, String contentHtml) {
+        return JsonFeedItemBuilder.builderFromTextAndHtmlContent(id, contentText, contentHtml);
+    }
+
     String getId();
 
     URL getUrl();
