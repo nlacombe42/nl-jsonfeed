@@ -15,20 +15,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JsonFeedSpecExamplesIntegrationTest {
 
     @Test
-    public void simple_example() throws Exception {
+    public void simple_example() {
         var expectedJsonText = "{\"version\":\"https://jsonfeed.org/version/1.1\",\"title\":\"My Example Feed\",\"home_page_url\":\"https://example.org/\",\"feed_url\":\"https://example.org/feed.json\",\"items\":[{\"id\":\"2\",\"url\":\"https://example.org/second-item\",\"content_text\":\"This is a second item.\"},{\"id\":\"1\",\"url\":\"https://example.org/initial-post\",\"content_html\":\"<p>Hello, world!</p>\"}]}";
         var item1 = JsonFeedItem
             .builderFromHtmlContent("1", "<p>Hello, world!</p>")
-            .url(URI.create("https://example.org/initial-post").toURL())
+            .url("https://example.org/initial-post")
             .build();
         var item2 = JsonFeedItem
             .builderFromTextContent("2", "This is a second item.")
-            .url(URI.create("https://example.org/second-item").toURL())
+            .url("https://example.org/second-item")
             .build();
         var jsonFeed = JsonFeed
             .builder(JsonFeedVersion.VERSION_1_1, "My Example Feed")
-            .homePageUrl(URI.create("https://example.org/").toURL())
-            .feedUrl(URI.create("https://example.org/feed.json").toURL())
+            .homePageUrl("https://example.org/")
+            .feedUrl("https://example.org/feed.json")
             .items(item2, item1)
             .build();
         var json = jsonFeed.toJson();

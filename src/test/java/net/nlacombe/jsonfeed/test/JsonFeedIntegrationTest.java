@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JsonFeedIntegrationTest {
 
@@ -33,6 +34,15 @@ public class JsonFeedIntegrationTest {
         assertThat(jsonFeed.getVersion().getVersionUri()).isEqualTo(givenJsonFeedVersion.getVersionUri());
         assertThat(jsonFeed.getVersion().getVersionText()).isEqualTo(givenJsonFeedVersion.getVersionText());
         assertThat(jsonFeed.getTitle()).isEqualTo(givenTitle);
+    }
+
+    @Test
+    public void test_json_feed_home_page_url_not_a_url_throws_exception() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            JsonFeed.builder(JsonFeedVersion.VERSION_1_1, "The Record")
+                .homePageUrl("this is not a url")
+                .build();
+        });
     }
 
     @Test

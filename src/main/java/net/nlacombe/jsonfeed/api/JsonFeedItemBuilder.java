@@ -1,6 +1,7 @@
 package net.nlacombe.jsonfeed.api;
 
 import net.nlacombe.jsonfeed.impl.DefaultJsonFeedItem;
+import net.nlacombe.jsonfeed.impl.util.UrlUtil;
 
 import java.net.URL;
 import java.time.OffsetDateTime;
@@ -33,8 +34,20 @@ public class JsonFeedItemBuilder {
         return this;
     }
 
+    public JsonFeedItemBuilder url(String url) {
+        defaultJsonFeedItem.setUrl(UrlUtil.toUrl(url));
+
+        return this;
+    }
+
     public JsonFeedItemBuilder externalUrl(URL externalUrl) {
         defaultJsonFeedItem.setExternalUrl(externalUrl);
+
+        return this;
+    }
+
+    public JsonFeedItemBuilder externalUrl(String externalUrl) {
+        defaultJsonFeedItem.setExternalUrl(UrlUtil.toUrl(externalUrl));
 
         return this;
     }
@@ -57,8 +70,20 @@ public class JsonFeedItemBuilder {
         return this;
     }
 
+    public JsonFeedItemBuilder image(String image) {
+        defaultJsonFeedItem.setImage(UrlUtil.toUrl(image));
+
+        return this;
+    }
+
     public JsonFeedItemBuilder bannerImage(URL bannerImage) {
         defaultJsonFeedItem.setBannerImage(bannerImage);
+
+        return this;
+    }
+
+    public JsonFeedItemBuilder bannerImage(String bannerImage) {
+        defaultJsonFeedItem.setBannerImage(UrlUtil.toUrl(bannerImage));
 
         return this;
     }

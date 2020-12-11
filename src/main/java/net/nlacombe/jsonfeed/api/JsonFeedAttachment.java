@@ -8,6 +8,10 @@ public interface JsonFeedAttachment {
         return JsonFeedAttachmentBuilder.from(url, mimeType);
     }
 
+    static JsonFeedAttachmentBuilder builder(String url, String mimeType) {
+        return JsonFeedAttachmentBuilder.from(url, mimeType);
+    }
+
     URL getUrl();
 
     String getMimeType();

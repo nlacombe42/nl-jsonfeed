@@ -1,6 +1,7 @@
 package net.nlacombe.jsonfeed.api;
 
 import net.nlacombe.jsonfeed.impl.DefaultJsonFeed;
+import net.nlacombe.jsonfeed.impl.util.UrlUtil;
 
 import java.net.URL;
 import java.util.List;
@@ -24,8 +25,20 @@ public class JsonFeedBuilder {
         return this;
     }
 
+    public JsonFeedBuilder homePageUrl(String homePageUrl) {
+        jsonFeed.setHomePageUrl(UrlUtil.toUrl(homePageUrl));
+
+        return this;
+    }
+
     public JsonFeedBuilder feedUrl(URL feedUrl) {
         jsonFeed.setFeedUrl(feedUrl);
+
+        return this;
+    }
+
+    public JsonFeedBuilder feedUrl(String feedUrl) {
+        jsonFeed.setFeedUrl(UrlUtil.toUrl(feedUrl));
 
         return this;
     }
@@ -48,14 +61,32 @@ public class JsonFeedBuilder {
         return this;
     }
 
+    public JsonFeedBuilder nextUrl(String nextUrl) {
+        jsonFeed.setNextUrl(UrlUtil.toUrl(nextUrl));
+
+        return this;
+    }
+
     public JsonFeedBuilder icon(URL icon) {
         jsonFeed.setIcon(icon);
 
         return this;
     }
 
+    public JsonFeedBuilder icon(String icon) {
+        jsonFeed.setIcon(UrlUtil.toUrl(icon));
+
+        return this;
+    }
+
     public JsonFeedBuilder favicon(URL favicon) {
         jsonFeed.setFavicon(favicon);
+
+        return this;
+    }
+
+    public JsonFeedBuilder favicon(String favicon) {
+        jsonFeed.setFavicon(UrlUtil.toUrl(favicon));
 
         return this;
     }

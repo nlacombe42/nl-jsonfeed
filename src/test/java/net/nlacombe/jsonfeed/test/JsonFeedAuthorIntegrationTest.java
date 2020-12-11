@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,7 +17,7 @@ public class JsonFeedAuthorIntegrationTest {
     @Test
     public void test_json_feed_author_with_no_property() {
         assertThrows(IllegalArgumentException.class, () -> {
-            JsonFeedAuthor.from(null, null, null);
+            JsonFeedAuthor.from(null, (URL)null, (URL)null);
         });
     }
 
@@ -30,14 +31,14 @@ public class JsonFeedAuthorIntegrationTest {
     @Test
     public void test_json_feed_author_with_null_url() {
         assertThrows(IllegalArgumentException.class, () -> {
-            JsonFeedAuthor.fromUrl(null);
+            JsonFeedAuthor.fromUrl((URL)null);
         });
     }
 
     @Test
     public void test_json_feed_author_with_null_avatar() {
         assertThrows(IllegalArgumentException.class, () -> {
-            JsonFeedAuthor.fromAvatar(null);
+            JsonFeedAuthor.fromAvatar((URL)null);
         });
     }
 
