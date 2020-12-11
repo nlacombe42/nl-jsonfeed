@@ -10,7 +10,30 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PropertyIntegrationTest {
+public class JsonFeedIntegrationTest {
+
+    @Test
+    public void serialize_json_feed_with_only_version_title_and_no_items_to_json_text() {
+        var expectedJsonText = "{\"version\":\"https://jsonfeed.org/version/1.1\",\"title\":\"My Example Feed\",\"items\":[]}";
+        var jsonFeed = JsonFeed.builder(JsonFeedVersion.VERSION_1_1, "My Example Feed").build();
+        var json = jsonFeed.toJson();
+
+        assertThat(json).isEqualTo(expectedJsonText);
+    }
+
+    @Test
+    public void serialize_and_deserialize_json_feed_with_only_version_title_and_no_items_to_json_text() {
+        var givenJsonFeedVersion = JsonFeedVersion.VERSION_1_1;
+        var givenTitle = "My Example Feed";
+        var json = JsonFeed.builder(givenJsonFeedVersion, givenTitle).build().toJson();
+        var jsonFeed = JsonFeed.fromJson(json);
+
+        assertThat(jsonFeed).isNotNull();
+        assertThat(jsonFeed.getVersion()).isNotNull();
+        assertThat(jsonFeed.getVersion().getVersionUri()).isEqualTo(givenJsonFeedVersion.getVersionUri());
+        assertThat(jsonFeed.getVersion().getVersionText()).isEqualTo(givenJsonFeedVersion.getVersionText());
+        assertThat(jsonFeed.getTitle()).isEqualTo(givenTitle);
+    }
 
     @Test
     public void test_json_feed_home_page_url() throws MalformedURLException {
@@ -105,7 +128,7 @@ public class PropertyIntegrationTest {
             .build();
 
         testPropertySerializationAndDeserialization(expectedJsonText, jsonFeed,
-            jsonDeserializedJsonFeedFeed -> assertThat(jsonDeserializedJsonFeedFeed.getLanguage()).isEqualTo(language));
+            jsonDeserializedJsonFeedFeed -> assertThat(jsonDeserializedJsonFeedFeed.getLanguage().toLanguageTag()).isEqualTo(language));
     }
 
     @Test
@@ -125,7 +148,7 @@ public class PropertyIntegrationTest {
 
         assertThat(json).isEqualTo(expectedJsonText);
 
-        var deserializedJsonFeed = JsonFeed.from(json);
+        var deserializedJsonFeed = JsonFeed.fromJson(json);
         testDeserializedProperty.accept(deserializedJsonFeed);
     }
 }

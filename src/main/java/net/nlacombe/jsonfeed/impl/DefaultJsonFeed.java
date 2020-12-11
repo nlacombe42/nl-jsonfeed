@@ -6,6 +6,8 @@ import net.nlacombe.jsonfeed.api.JsonFeedHub;
 import net.nlacombe.jsonfeed.api.JsonFeedItem;
 import net.nlacombe.jsonfeed.api.JsonFeedVersion;
 import net.nlacombe.jsonfeed.api.exception.JsonFeedException;
+import net.nlacombe.jsonfeed.impl.util.ObjectUtil;
+import net.nlacombe.jsonfeed.impl.util.StringUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,7 +17,9 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class DefaultJsonFeed implements JsonFeed {
 
@@ -30,17 +34,20 @@ public class DefaultJsonFeed implements JsonFeed {
     private URL nextUrl;
     private URL icon;
     private URL favicon;
-    private String language;
+    private Locale language;
     private Boolean expired;
     private List<JsonFeedHub> hubs;
     private List<JsonFeedAuthor> authors;
     private List<JsonFeedItem> items;
 
-    private DefaultJsonFeed() {
+    private DefaultJsonFeed(JsonFeedVersion version, String title) {
+        this.version = ObjectUtil.requireNonNull(version, "version must not be null");
+        this.title = StringUtil.requireNotBlank(title, "title must not be null");
+        this.items = new LinkedList<>();
     }
 
-    public static DefaultJsonFeed newEmpty() {
-        return new DefaultJsonFeed();
+    public static DefaultJsonFeed newDefaultJsonFeed(JsonFeedVersion version, String title) {
+        return new DefaultJsonFeed(version, title);
     }
 
     @Override
@@ -148,11 +155,11 @@ public class DefaultJsonFeed implements JsonFeed {
     }
 
     @Override
-    public String getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
 

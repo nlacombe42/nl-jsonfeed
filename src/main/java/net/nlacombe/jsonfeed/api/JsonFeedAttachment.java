@@ -4,6 +4,10 @@ import java.net.URL;
 
 public interface JsonFeedAttachment {
 
+    static JsonFeedAttachmentBuilder builder(URL url, String mimeType) {
+        return JsonFeedAttachmentBuilder.from(url, mimeType);
+    }
+
     URL getUrl();
 
     String getMimeType();

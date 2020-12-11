@@ -1,7 +1,7 @@
 package net.nlacombe.jsonfeed.impl;
 
 import net.nlacombe.jsonfeed.api.JsonFeedAuthor;
-import net.nlacombe.jsonfeed.api.exception.JsonFeedException;
+import net.nlacombe.jsonfeed.impl.util.StringUtil;
 
 import java.net.URL;
 
@@ -16,8 +16,8 @@ public class DefaultJsonFeedAuthor implements JsonFeedAuthor {
         this.url = url;
         this.avatar = avatar;
 
-        if (isEmpty(name) && url == null && avatar == null)
-            throw new JsonFeedException("You must specify at least one of the following properties: name, url, avatar");
+        if (StringUtil.isBlank(name) && url == null && avatar == null)
+            throw new IllegalArgumentException("You must specify at least one of the following properties: name, url, avatar");
     }
 
     public static DefaultJsonFeedAuthor newDefaultJsonFeedAuthor(String name, URL url, URL avatar) {
@@ -39,7 +39,4 @@ public class DefaultJsonFeedAuthor implements JsonFeedAuthor {
         return avatar;
     }
 
-    private boolean isEmpty(String text) {
-        return text == null || "".equals(text);
-    }
 }

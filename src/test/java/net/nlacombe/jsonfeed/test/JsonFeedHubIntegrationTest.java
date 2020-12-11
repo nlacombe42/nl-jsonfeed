@@ -10,7 +10,7 @@ import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HubIntegrationTest {
+public class JsonFeedHubIntegrationTest {
 
     @Test
     public void test_json_feed_hubs() throws MalformedURLException {
@@ -23,7 +23,7 @@ public class HubIntegrationTest {
 
         assertThat(json).isEqualTo(expectedJsonText);
 
-        var deserializedJsonFeed = JsonFeed.from(json);
+        var deserializedJsonFeed = JsonFeed.fromJson(json);
 
         assertThat(deserializedJsonFeed.getHubs()).hasSize(1);
 

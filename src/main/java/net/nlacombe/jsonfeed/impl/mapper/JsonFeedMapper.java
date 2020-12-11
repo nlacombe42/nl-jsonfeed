@@ -9,6 +9,7 @@ import net.nlacombe.jsonfeed.impl.dto.JsonFeedDto;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
 
 public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
 
@@ -35,7 +36,7 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
         jsonFeedDto.setNext_url(jsonFeed.getNextUrl() == null ? null : jsonFeed.getNextUrl().toString());
         jsonFeedDto.setIcon(jsonFeed.getIcon() == null ? null : jsonFeed.getIcon().toString());
         jsonFeedDto.setFavicon(jsonFeed.getFavicon() == null ? null : jsonFeed.getFavicon().toString());
-        jsonFeedDto.setLanguage(jsonFeed.getLanguage());
+        jsonFeedDto.setLanguage(jsonFeed.getLanguage() == null ? null : jsonFeed.getLanguage().toLanguageTag());
         jsonFeedDto.setExpired(jsonFeed.isExpired());
         jsonFeedDto.setHubs(jsonFeedHubMapper.mapToDtos(jsonFeed.getHubs()));
         jsonFeedDto.setAuthors(jsonFeedAuthorMapper.mapToDtos(jsonFeed.getAuthors()));
@@ -46,9 +47,10 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
     @Override
     public JsonFeed mapToDomainObject(JsonFeedDto jsonFeedDto) {
         try {
-            var jsonFeed = DefaultJsonFeed.newEmpty();
-            jsonFeed.setVersion(JsonFeedVersion.parse(jsonFeedDto.getVersion()));
-            jsonFeed.setTitle(jsonFeedDto.getTitle());
+            var version = JsonFeedVersion.parse(jsonFeedDto.getVersion());
+            var title = jsonFeedDto.getTitle();
+
+            var jsonFeed = DefaultJsonFeed.newDefaultJsonFeed(version, title);
             jsonFeed.setItems(jsonFeedItemMapper.mapToDomainObjects(jsonFeedDto.getItems()));
             jsonFeed.setHomePageUrl(jsonFeedDto.getHome_page_url() == null ? null : URI.create(jsonFeedDto.getHome_page_url()).toURL());
             jsonFeed.setFeedUrl(jsonFeedDto.getFeed_url() == null ? null : URI.create(jsonFeedDto.getFeed_url()).toURL());
@@ -57,7 +59,7 @@ public class JsonFeedMapper extends AbstractBeanMapper<JsonFeedDto, JsonFeed> {
             jsonFeed.setNextUrl(jsonFeedDto.getNext_url() == null ? null : URI.create(jsonFeedDto.getNext_url()).toURL());
             jsonFeed.setIcon(jsonFeedDto.getIcon() == null ? null : URI.create(jsonFeedDto.getIcon()).toURL());
             jsonFeed.setFavicon(jsonFeedDto.getFavicon() == null ? null : URI.create(jsonFeedDto.getFavicon()).toURL());
-            jsonFeed.setLanguage(jsonFeedDto.getLanguage());
+            jsonFeed.setLanguage(jsonFeedDto.getLanguage() == null ? null : Locale.forLanguageTag(jsonFeedDto.getLanguage()));
             jsonFeed.setExpired(jsonFeedDto.getExpired());
             jsonFeed.setHubs(jsonFeedHubMapper.mapToDomainObjects(jsonFeedDto.getHubs()));
             jsonFeed.setAuthors(jsonFeedAuthorMapper.mapToDomainObjects(jsonFeedDto.getAuthors()));

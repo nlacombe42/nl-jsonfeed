@@ -13,11 +13,12 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Locale;
 
 public interface JsonFeed {
 
     static JsonFeedBuilder builder(JsonFeedVersion version, String title) {
-        return new JsonFeedBuilder(version, title);
+        return JsonFeedBuilder.from(version, title);
     }
 
     static JsonFeed read(InputStream inputStream, Charset charset) {
@@ -32,7 +33,7 @@ public interface JsonFeed {
         return JsonFeedConverter.getInstance().readJsonFeed(reader);
     }
 
-    static JsonFeed from(String json)  {
+    static JsonFeed fromJson(String json)  {
         try (var reader = new StringReader(json)) {
             return JsonFeed.read(reader);
         }
@@ -62,7 +63,7 @@ public interface JsonFeed {
 
     URL getFavicon();
 
-    String getLanguage();
+    Locale getLanguage();
 
     Boolean isExpired();
 

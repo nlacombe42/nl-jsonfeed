@@ -1,11 +1,11 @@
 package net.nlacombe.jsonfeed.api;
 
 import net.nlacombe.jsonfeed.api.exception.JsonFeedException;
+import net.nlacombe.jsonfeed.impl.util.ObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -31,7 +31,7 @@ public class JsonFeedVersion {
     }
 
     public static JsonFeedVersion parse(String versionUriText) {
-        Objects.requireNonNull(versionUriText, "versionUriText must not be null");
+        ObjectUtil.requireNonNull(versionUriText, "versionUriText must not be null");
 
         var existingJsonFeedVersion = JSON_FEED_VERSIONS.stream()
             .filter(jsonFeedVersion -> jsonFeedVersion.getVersionUri().equals(versionUriText))

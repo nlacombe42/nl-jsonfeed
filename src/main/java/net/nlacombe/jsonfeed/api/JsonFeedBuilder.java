@@ -3,19 +3,19 @@ package net.nlacombe.jsonfeed.api;
 import net.nlacombe.jsonfeed.impl.DefaultJsonFeed;
 
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
 
 public class JsonFeedBuilder {
 
     private final DefaultJsonFeed jsonFeed;
 
-    public JsonFeedBuilder(JsonFeedVersion version, String title) {
-        jsonFeed = DefaultJsonFeed.newEmpty();
-        jsonFeed.setVersion(Objects.requireNonNull(version, "version must not be null"));
-        jsonFeed.setTitle(Objects.requireNonNull(title, "title must not be null"));
-        jsonFeed.setItems(new LinkedList<>());
+    private JsonFeedBuilder(JsonFeedVersion version, String title) {
+        jsonFeed = DefaultJsonFeed.newDefaultJsonFeed(version, title);
+    }
+
+    public static JsonFeedBuilder from(JsonFeedVersion version, String title) {
+        return new JsonFeedBuilder(version, title);
     }
 
     public JsonFeedBuilder homePageUrl(URL homePageUrl) {
@@ -60,10 +60,14 @@ public class JsonFeedBuilder {
         return this;
     }
 
-    public JsonFeedBuilder language(String language) {
+    public JsonFeedBuilder language(Locale language) {
         jsonFeed.setLanguage(language);
 
         return this;
+    }
+
+    public JsonFeedBuilder language(String language) {
+        return language(Locale.forLanguageTag(language));
     }
 
     public JsonFeedBuilder expired(Boolean expired) {
@@ -104,6 +108,24 @@ public class JsonFeedBuilder {
             return this;
 
         jsonFeed.setAuthors(List.of(authors));
+
+        return this;
+    }
+
+    public JsonFeedBuilder items(List<JsonFeedItem> items) {
+        if (items == null || items.isEmpty())
+            return this;
+
+        jsonFeed.setItems(items);
+
+        return this;
+    }
+
+    public JsonFeedBuilder items(JsonFeedItem... items) {
+        if (items == null || items.length == 0)
+            return this;
+
+        jsonFeed.setItems(List.of(items));
 
         return this;
     }
