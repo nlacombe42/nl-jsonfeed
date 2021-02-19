@@ -6,9 +6,6 @@ plugins {
 group = 'net.nlacombe'
 version = '0.2.0'
 
-sourceCompatibility = JavaVersion.VERSION_1_10
-targetCompatibility = JavaVersion.VERSION_1_10
-
 def junitVersion = '5.7.0'
 
 dependencies {
@@ -38,10 +35,17 @@ task javadocJar(type: Javadoc) {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_1_10
+    targetCompatibility = JavaVersion.VERSION_1_10
     modularity.inferModulePath = true
 
 	withJavadocJar()
 	withSourcesJar()
+}
+
+compileTestJava {
+    sourceCompatibility = JavaVersion.VERSION_15
+    targetCompatibility = JavaVersion.VERSION_15
 }
 
 publishing {
@@ -53,5 +57,5 @@ publishing {
 }
 
 wrapper {
-	gradleVersion = '6.7'
+	gradleVersion = '6.8.2'
 }
