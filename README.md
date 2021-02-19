@@ -1,6 +1,8 @@
 # nl-jsonfeed
 A java library to create and read <a href="https://jsonfeed.org/version/1.1">json feeds<a/>.
 
+## Getting started
+
 ### Example on how to create a feed
 ```java
     var jsonFeedItemId = "https://example.net/my-first-post";
@@ -58,3 +60,10 @@ You can also read a `JsonFeed` from a json `String` or a `java.io.Reader`
     var jsonFeedFromJsonString = JsonFeed.fromJson(json);
     var jsonFeedFromReader = JsonFeed.read(new FileReader("feed.json")); // use a try-with-resources, this is just for brevity of the example ;)
 ```
+
+## Design decisions
+- only allow to create a valid/recommended json feed v1.1
+- support reading json feed v1
+- allow the consumer to choose which json serialization/deserialization library they want
+- have the minimum number of dependencies possible
+- try to stay true to the doc as much as possible while offering a convenient api to java consumers
