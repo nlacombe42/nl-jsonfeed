@@ -3,7 +3,9 @@ A java library to create and read <a href="https://jsonfeed.org/version/1.1">jso
 
 ### Example on how to create a feed
 ```java
-    var jsonFeedItem = JsonFeedItem.builderFromHtmlContent("https://example.net/my-first-post", "&lt;p&gt;Welcome to my first post!&lt;/p&gt;")
+    var jsonFeedItemId = "https://example.net/my-first-post";
+    var jsonFeedItemHtmlContent = "<p>Welcome to my first post!</p>";
+    var jsonFeedItem = JsonFeedItem.builderFromHtmlContent(jsonFeedItemId, jsonFeedItemHtmlContent)
         .url("https://example.net/my-first-post")
         .build();
     var jsonFeed = JsonFeed.builder(JsonFeedVersion.VERSION_1_1, "Joe's finance blog")
@@ -11,6 +13,15 @@ A java library to create and read <a href="https://jsonfeed.org/version/1.1">jso
         .items(jsonFeedItem)
         .build();
     var json = jsonFeed.toJson();
+```
+
+<br />
+
+You can also serialize the `JsonFeed` instance to a `java.io.Writer` or an `java.io.OutputStream`
+```java
+    jsonFeed.writeAsJson(new FileWriter("feed.json"));
+    jsonFeed.writeAsUtf8Json(new FileOutputStream("feed.json"));
+    // use a try-with-resources in both cases, this is just for brevity of the example ;)
 ```
 
 ### Example on how to read a feed
@@ -26,4 +37,24 @@ A java library to create and read <a href="https://jsonfeed.org/version/1.1">jso
   var jsonFeedItem = jsonFeed.getItems().get(0);
   var itemId = jsonFeedItem.getId();
   var itemContent = jsonFeedItem.getContentHtml();
+```
+
+<br />
+
+You can also read a `JsonFeed` from a json `String` or a `java.io.Reader`
+```java
+    var json = """
+        {
+          "version": "https://jsonfeed.org/version/1.1",
+          "title": "Joe's finance blog",
+          "home_page_url": "https://example.net/",
+          "items": [{
+            "id": "https://example.net/my-first-post",
+            "url": "https://example.net/my-first-post",
+            "content_html": "<p>Welcome to my first post!</p>"
+          }]
+        }
+        """;
+    var jsonFeedFromJsonString = JsonFeed.fromJson(json);
+    var jsonFeedFromReader = JsonFeed.read(new FileReader("feed.json")); // use a try-with-resources, this is just for brevity of the example ;)
 ```

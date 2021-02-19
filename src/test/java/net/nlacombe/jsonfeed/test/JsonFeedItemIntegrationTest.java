@@ -268,8 +268,10 @@ public class JsonFeedItemIntegrationTest {
     }
 
     @Test
-    public void create_simple_json_feed_example_in_nlJsonFeed_doc() {
-        var jsonFeedItem = JsonFeedItem.builderFromHtmlContent("https://example.net/my-first-post", "<p>Welcome to my first post!</p>")
+    public void create_simple_json_feed_example_in_nlJsonFeed_doc() throws IOException {
+        var jsonFeedItemId = "https://example.net/my-first-post";
+        var jsonFeedItemHtmlContent = "<p>Welcome to my first post!</p>";
+        var jsonFeedItem = JsonFeedItem.builderFromHtmlContent(jsonFeedItemId, jsonFeedItemHtmlContent)
             .url("https://example.net/my-first-post")
             .build();
         var jsonFeed = JsonFeed.builder(JsonFeedVersion.VERSION_1_1, "Joe's finance blog")
