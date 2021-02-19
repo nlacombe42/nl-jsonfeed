@@ -6,8 +6,13 @@ import net.nlacombe.jsonfeed.api.JsonFeedItem;
 import net.nlacombe.jsonfeed.api.JsonFeedVersion;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.function.Consumer;
@@ -260,6 +265,39 @@ public class JsonFeedItemIntegrationTest {
             var invalidJson = "{\"version\":\"https://jsonfeed.org/version/1.1\",\"title\":\"test title\",\"items\":[{\"content_html\":\"<p>test html content</p>\"}]}";
             JsonFeed.fromJson(invalidJson);
         });
+    }
+
+    @Test
+    public void create_simple_json_feed_example_in_nlJsonFeed_doc() {
+        var jsonFeedItem = JsonFeedItem.builderFromHtmlContent("https://example.net/my-first-post", "<p>Welcome to my first post!</p>")
+            .url("https://example.net/my-first-post")
+            .build();
+        var jsonFeed = JsonFeed.builder(JsonFeedVersion.VERSION_1_1, "Joe's finance blog")
+            .homePageUrl("https://example.net/")
+            .items(jsonFeedItem)
+            .build();
+        var json = jsonFeed.toJson();
+
+        assertThat(json).isEqualTo("{\"version\":\"https://jsonfeed.org/version/1.1\",\"title\":\"Joe's finance blog\",\"home_page_url\":\"https://example.net/\",\"items\":[{\"id\":\"https://example.net/my-first-post\",\"url\":\"https://example.net/my-first-post\",\"content_html\":\"<p>Welcome to my first post!</p>\"}]}");
+    }
+
+    @Test
+    public void read_simple_json_feed_example_in_nlJsonFeed_doc() throws IOException, InterruptedException {
+        var jsonFeedUri = URI.create("https://jsonfeed.org/feed.json");
+        var httpClient = HttpClient.newHttpClient();
+        var response = httpClient.send(HttpRequest.newBuilder(jsonFeedUri).build(), HttpResponse.BodyHandlers.ofInputStream());
+        var responseBodyInputStream = response.body();
+
+        var jsonFeed = JsonFeed.read(responseBodyInputStream, StandardCharsets.UTF_8);
+        var jsonFeedTitle = jsonFeed.getTitle();
+
+        var jsonFeedItem = jsonFeed.getItems().get(0);
+        var itemId = jsonFeedItem.getId();
+        var itemContent = jsonFeedItem.getContentHtml();
+
+        assertThat(jsonFeedTitle).isEqualTo("JSON Feed");
+        assertThat(itemId).isEqualTo("http://jsonfeed.micro.blog/2020/08/07/json-feed-version.html");
+        assertThat(itemContent).isEqualTo("<p>We&rsquo;ve updated the spec to <a href=\"https://jsonfeed.org/version/1.1\">version 1.1</a>. It’s a minor update to JSON Feed, clarifying a few things in the spec and adding a couple new fields such as <code>authors</code> and <code>language</code>.</p>\n\n<p>For version 1.1, we&rsquo;re starting to move to the more specific MIME type <code>application/feed+json</code>. Clients that parse HTML to discover feeds should prefer that MIME type, while still falling back to accepting <code>application/json</code> too.</p>\n\n<p>The <a href=\"https://jsonfeed.org/code/\">code page</a> has also been updated with several new code libraries and apps that support JSON Feed.</p>\n");
     }
 
     private void testPropertySerializationAndDeserializationForList(String expectedJsonText, JsonFeed jsonFeed, Consumer<List<JsonFeedItem>> testDeserializedProperty) {
