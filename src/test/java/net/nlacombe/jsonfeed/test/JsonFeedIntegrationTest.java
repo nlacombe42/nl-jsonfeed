@@ -153,6 +153,14 @@ public class JsonFeedIntegrationTest {
             jsonDeserializedJsonFeedFeed -> assertThat(jsonDeserializedJsonFeedFeed.isExpired()).isEqualTo(expired));
     }
 
+    @Test
+    public void throw_exception_when_parsing_jsonfeed_without_version() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            var invalidJson = "{\"title\":\"My Example Feed\",\"items\":[]}";
+            JsonFeed.fromJson(invalidJson);
+        });
+    }
+
     private void testPropertySerializationAndDeserialization(String expectedJsonText, JsonFeed jsonFeed, Consumer<JsonFeed> testDeserializedProperty) {
         var json = jsonFeed.toJson();
 

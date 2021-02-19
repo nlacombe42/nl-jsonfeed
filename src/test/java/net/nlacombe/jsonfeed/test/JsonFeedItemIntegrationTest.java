@@ -254,6 +254,14 @@ public class JsonFeedItemIntegrationTest {
             });
     }
 
+    @Test
+    public void throw_exception_when_parsing_jsonfeed_item_without_id() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            var invalidJson = "{\"version\":\"https://jsonfeed.org/version/1.1\",\"title\":\"test title\",\"items\":[{\"content_html\":\"<p>test html content</p>\"}]}";
+            JsonFeed.fromJson(invalidJson);
+        });
+    }
+
     private void testPropertySerializationAndDeserializationForList(String expectedJsonText, JsonFeed jsonFeed, Consumer<List<JsonFeedItem>> testDeserializedProperty) {
         var json = jsonFeed.toJson();
 
