@@ -3,7 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-group = 'net.nlacombe'
 version = '0.0.1'
 
 dependencies {
@@ -12,23 +11,23 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
 }
 
-repositories {
-	mavenCentral()
-	mavenLocal()
-}
-
 javadoc {
     modularity.inferModulePath = true
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_10
-    targetCompatibility = JavaVersion.VERSION_1_10
+    sourceCompatibility = project.mainJavaVersion
+    targetCompatibility = project.mainJavaVersion
     modularity.inferModulePath = true
 
-	withJavadocJar()
-	withSourcesJar()
+    withJavadocJar()
+    withSourcesJar()
+}
+
+compileTestJava {
+    sourceCompatibility = project.testJavaVersion
+    targetCompatibility = project.testJavaVersion
 }
 
 publishing {
@@ -37,8 +36,4 @@ publishing {
 			from components.java
 		}
 	}
-}
-
-wrapper {
-	gradleVersion = '7.0.1'
 }

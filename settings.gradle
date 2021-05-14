@@ -1,0 +1,1 @@
+include 'nl-jsonfeed', 'nl-jsonfeed-jackson', 'nl-jsonfeed-jackson-test', 'nl-jsonfeed-gson', 'nl-jsonfeed-gson-test'

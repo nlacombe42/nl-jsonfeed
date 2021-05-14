@@ -2,7 +2,6 @@ plugins {
 	id 'application'
 }
 
-group = 'net.nlacombe'
 version = '0.0.1'
 
 dependencies {
@@ -13,22 +12,13 @@ dependencies {
     runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
 }
 
-repositories {
-	mavenCentral()
-	mavenLocal()
-}
-
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_10
-    targetCompatibility = JavaVersion.VERSION_1_10
+    sourceCompatibility = project.mainJavaVersion
+    targetCompatibility = project.mainJavaVersion
     modularity.inferModulePath = true
 }
 
 application {
     mainModule = 'net.nlacombe.jsonfeed.test'
     mainClass = 'net.nlacombe.jsonfeed.test.Main'
-}
-
-wrapper {
-	gradleVersion = '7.0.1'
 }

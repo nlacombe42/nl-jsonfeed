@@ -1,0 +1,18 @@
+subprojects {
+    ext.mainJavaVersion = JavaVersion.VERSION_11
+    ext.testJavaVersion = JavaVersion.VERSION_15
+    ext.junitVersion = '5.7.0'
+
+	group = 'net.nlacombe'
+
+	repositories {
+		mavenCentral()
+		mavenLocal()
+	}
+
+
+}
+
+wrapper {
+	gradleVersion = '7.0.2'
+}
