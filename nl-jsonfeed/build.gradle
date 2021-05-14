@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'net.nlacombe'
-version = '0.2.0'
+version = '0.2.1'
 
 def junitVersion = '5.7.0'
 
@@ -29,9 +29,9 @@ test {
     useJUnitPlatform()
 }
 
-task javadocJar(type: Javadoc) {
-    source = sourceSets.main.allJava
-    options.quiet()
+javadoc {
+    modularity.inferModulePath = true
+    options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 java {
@@ -54,8 +54,11 @@ publishing {
 			from components.java
 		}
 	}
+    repositories {
+        mavenLocal()
+    }
 }
 
 wrapper {
-	gradleVersion = '6.8.2'
+	gradleVersion = '7.0.2'
 }

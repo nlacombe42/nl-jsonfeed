@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * A <a href="https://jsonfeed.org/version/1.1">json feed<a/> item.
- * (from <a href="https://github.com/nlacombe42/nl-jsonfeed">https://github.com/nlacombe42/nl-jsonfeed</a></a>)
+ * A <a href="https://jsonfeed.org/version/1.1">json feed</a> item.
+ * (from <a href="https://github.com/nlacombe42/nl-jsonfeed">https://github.com/nlacombe42/nl-jsonfeed</a>)
  *
  * <p>A text and/or html feed item such as blog posts or social media posts.</p>
  *
- * <h3>Example on how to create a feed</h3>
+ * <h2>Example on how to create a feed</h2>
  * <p>
  *     <pre>
  *         var jsonFeedItem = JsonFeedItem.builderFromHtmlContent("https://example.net/my-first-post", "&lt;p&gt;Welcome to my first post!&lt;/p&gt;")
@@ -25,7 +25,7 @@ import java.util.Locale;
  *     </pre>
  * </p>
  *
- * <h3>Example on how to read a feed</h3>
+ * <h2>Example on how to read a feed</h2>
  *  <p>
  *      <pre>
  *          var jsonFeedUri = URI.create("https://jsonfeed.org/feed.json");

@@ -1,0 +1,44 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+group = 'net.nlacombe'
+version = '0.0.1'
+
+dependencies {
+    implementation 'net.nlacombe:nl-jsonfeed:0.2.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
+
+javadoc {
+    modularity.inferModulePath = true
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_10
+    targetCompatibility = JavaVersion.VERSION_1_10
+    modularity.inferModulePath = true
+
+	withJavadocJar()
+	withSourcesJar()
+}
+
+publishing {
+	publications {
+		jsonFeedJacksonLib(MavenPublication) {
+			from components.java
+		}
+	}
+}
+
+wrapper {
+	gradleVersion = '7.0.1'
+}
