@@ -51,6 +51,16 @@ publishing {
         nlJsonfeed(MavenPublication) {
             from components.java
 
+            repositories {
+                maven {
+                    url = 'https://s01.oss.sonatype.org/content/repositories/releases/'
+                    credentials {
+                        username = 'nlacombe'
+                        password = JOptionPane.showInputDialog('Maven central password')
+                    }
+                }
+            }
+
             pom {
                 name = project.name
                 description = 'library for reading and generating [json feeds](https://jsonfeed.org/version/1.1)'
