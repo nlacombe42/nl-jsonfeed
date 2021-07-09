@@ -1,12 +1,17 @@
+import javax.swing.JOptionPane
+import java.nio.file.Files
+import java.nio.file.Paths
+
 plugins {
 	id 'java-library'
-	id 'maven-publish'
+    id 'maven-publish'
+    id 'signing'
 }
 
-version = '0.0.1'
+version = '1.0.0'
 
 dependencies {
-    implementation 'net.nlacombe:nl-jsonfeed:0.2.1'
+    implementation 'net.nlacombe:nl-jsonfeed:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
 }
 javadoc {
@@ -24,9 +29,54 @@ java {
 }
 
 publishing {
-	publications {
-		jsonFeedGsonLib(MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        jsonFeedGsonLib(MavenPublication) {
+            from components.java
+
+            repositories {
+                maven {
+                    url = 'https://s01.oss.sonatype.org/content/repositories/releases/'
+                    credentials {
+                        username = 'nlacombe'
+                        password = JOptionPane.showInputDialog('Maven central password')
+                    }
+                }
+            }
+
+            pom {
+                name = project.name
+                description = 'json serialization using gson for https://github.com/nlacombe42/nl-jsonfeed'
+                url = 'https://github.com/nlacombe42/nl-jsonfeed'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/nlacombe42/nl-jsonfeed/blob/main/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'nlacombe42'
+                        name = 'Nicolas Lacombe'
+                        email = 'nicolas.m.lacombe@gmail.com'
+                        url = 'https://nlacombe.net/summary'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/nlacombe42/nl-jsonfeed.git'
+                    developerConnection = 'scm:git:ssh://github.com:nlacombe42/nl-jsonfeed.git'
+                    url = 'https://github.com/nlacombe42/nl-jsonfeed/tree/main/'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    def keyId = '8E673A7B';
+    def signingKey = new String(Files.readAllBytes(Paths.get(signingKeyFilePath)))
+    def signingKeyPassword = JOptionPane.showInputDialog('Signing key password')
+
+    required { gradle.taskGraph.hasTask("publish") }
+    useInMemoryPgpKeys(keyId, signingKey, signingKeyPassword)
+    sign publishing.publications.jsonFeedGsonLib
 }
