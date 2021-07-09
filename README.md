@@ -1,6 +1,50 @@
 # nl-jsonfeed
 A java library to create and read <a href="https://jsonfeed.org/version/1.1">json feeds<a/>.
 
+## Installation
+You can find the relevant artifacts on [maven central](https://mvnrepository.com/artifact/net.nlacombe),
+see below sections for the specific artefacts you need.
+
+### With jackson
+Gradle:
+```groovy
+implementation 'net.nlacombe:nl-jsonfeed:1.0.0'
+implementation 'net.nlacombe:nl-jsonfeed-jackson:1.0.0'
+```
+Maven:
+```xml
+<dependency>
+    <groupId>net.nlacombe</groupId>
+    <artifactId>nl-jsonfeed</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>net.nlacombe</groupId>
+    <artifactId>nl-jsonfeed-jackson</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### With gson
+Gradle:
+```groovy
+implementation 'net.nlacombe:nl-jsonfeed:1.0.0'
+implementation 'net.nlacombe:nl-jsonfeed-gson:1.0.0'
+```
+Maven:
+```xml
+<dependency>
+    <groupId>net.nlacombe</groupId>
+    <artifactId>nl-jsonfeed</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>net.nlacombe</groupId>
+    <artifactId>nl-jsonfeed-gson</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ## Getting started
 
 ### Example on how to create a feed
