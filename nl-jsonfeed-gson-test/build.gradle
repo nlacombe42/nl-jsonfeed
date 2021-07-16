@@ -2,20 +2,34 @@ plugins {
 	id 'application'
 }
 
-version = '1.0.0'
+version = '1.0.1'
 
 dependencies {
     implementation 'net.nlacombe:nl-jsonfeed:1.0.0'
-    implementation 'net.nlacombe:nl-jsonfeed-gson:1.0.0'
+    implementation 'net.nlacombe:nl-jsonfeed-gson:1.0.1'
     implementation 'org.slf4j:slf4j-api:1.7.30'
 
     runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${project.junitVersion}"
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${project.junitVersion}"
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.2.3'
 }
 
 java {
     sourceCompatibility = project.mainJavaVersion
     targetCompatibility = project.mainJavaVersion
     modularity.inferModulePath = true
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileTestJava {
+    sourceCompatibility = project.testJavaVersion
+    targetCompatibility = project.testJavaVersion
 }
 
 application {

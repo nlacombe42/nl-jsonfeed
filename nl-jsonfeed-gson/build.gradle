@@ -8,7 +8,7 @@ plugins {
     id 'signing'
 }
 
-version = '1.0.0'
+version = '1.0.1'
 
 dependencies {
     implementation 'net.nlacombe:nl-jsonfeed:1.0.0'
